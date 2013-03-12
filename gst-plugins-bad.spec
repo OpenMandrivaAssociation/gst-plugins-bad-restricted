@@ -1,6 +1,3 @@
-%define api	1.0
-%define bname	gstreamer%{api}
-
 %define build_experimental	0
 %{?_with_experimental: %{expand: %%global build_experimental 1}}
 %define build_amrwb	0
@@ -28,6 +25,8 @@
 %define build_dts	1
 %endif
 
+%define bname	gstreamer%{api}
+%define api	1.0
 %define major	0
 %define	libbasecamerabinsrc	%mklibname gstbasecamerabinsrc %{api} %{major}
 %define	libbasevideo		%mklibname gstbasevideo %{api} %{major}
@@ -59,8 +58,8 @@ BuildRequires:	pkgconfig(check)
 BuildRequires:	pkgconfig(exempi-2.0)
 BuildRequires:	pkgconfig(gtk+-2.0)
 BuildRequires:	pkgconfig(glib-2.0)
-BuildRequires:	pkgconfig(gstreamer-plugins-base-1.0) >= %{version}
-BuildRequires:	pkgconfig(gstreamer-1.0) >= %{version}
+BuildRequires:	pkgconfig(gstreamer-plugins-base-%{api}) >= %{version}
+BuildRequires:	pkgconfig(gstreamer-%{api}) >= %{version}
 BuildRequires:	pkgconfig(libass)
 BuildRequires:	pkgconfig(libcdaudio)
 BuildRequires:	pkgconfig(libmimic)
