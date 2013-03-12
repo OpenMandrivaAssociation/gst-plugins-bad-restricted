@@ -283,7 +283,7 @@ This package is in restricted repository as it violates some patents.
 %package -n %{bname}-mms
 Summary:	GStreamer plug-in for mms streams
 Group:		System/Libraries
-Requires:	%{bname}-plugins = %{version}
+Requires:	%{bname}-plugins-base = %{version}
 BuildRequires:	pkgconfig(libmms)
 
 %description -n %{bname}-mms
@@ -295,7 +295,7 @@ Plug-in supporting the mms protocol based on the libmms library.
 %package -n %{bname}-rtmp
 Summary:	GStreamer plug-in for rtmp streams
 Group:		System/Libraries
-Requires:	%{bname}-plugins = %{version}
+Requires:	%{bname}-plugins-base = %{version}
 BuildRequires:	pkgconfig(librtmp)
 
 %description -n %{bname}-rtmp
@@ -307,7 +307,7 @@ Plug-in supporting the rtmp protocol based on the librtmp library.
 %package -n %{bname}-soundtouch
 Summary:	GStreamer plug-in for SoundTouch support
 Group:		Sound
-Requires:	%{bname}-plugins = %{version}
+Requires:	%{bname}-plugins-base = %{version}
 BuildRequires:	pkgconfig(soundtouch)
 
 %description -n %{bname}-soundtouch
@@ -342,7 +342,7 @@ This is a collection of VoIP plugins for GStreamer.
 %package -n %{bname}-faad
 Summary:	GStreamer plug-in for AAC audio playback
 Group:		Sound
-Requires:	%{bname}-plugins >= %{version}
+Requires:	%{bname}-plugins-base >= %{version}
 BuildRequires:	libfaad2-devel
 
 %description -n %{bname}-faad
@@ -355,7 +355,7 @@ This package is in restricted repository as it violates some patents.
 %package -n %{bname}-faac
 Summary:	GStreamer plug-ins for AAC audio encoding
 Group:		Sound
-Requires:	%{bname}-plugins >= %{version}
+Requires:	%{bname}-plugins-base >= %{version}
 BuildRequires:	libfaac-devel
 
 %description -n %{bname}-faac
@@ -367,7 +367,7 @@ This package is in restricted repository as it violates some patents.
 %package -n %{bname}-gsm
 Summary:	GStreamer plugin for GSM lossy audio format
 Group:		Sound
-Requires:	%{bname}-plugins >= %{version}
+Requires:	%{bname}-plugins-base >= %{version}
 BuildRequires:	gsm-devel >= 1.0.10
 
 %description -n %{bname}-gsm
@@ -378,7 +378,7 @@ Output plugin for GStreamer to convert to GSM lossy audio format.
 %package -n %{bname}-swfdec
 Summary: 	GStreamer Flash rendering plug-in
 Group:		System/Libraries
-Requires:	%{bname}-plugins = %{version}
+Requires:	%{bname}-plugins-base = %{version}
 BuildRequires:	libswfdec-devel => 0.3.0
 
 %description -n %{bname}-swfdec
@@ -389,7 +389,7 @@ Plug-in for rendering Flash animations using swfdec library
 %package -n %{bname}-amrwb
 Summary:	GStreamer plug-in for AMR-WB support
 Group:		Sound
-Requires:	%{bname}-plugins >= %{version}
+Requires:	%{bname}-plugins-base >= %{version}
 BuildRequires:	libamrwb-devel
 
 %description -n %{bname}-amrwb
@@ -402,7 +402,7 @@ This package is in restricted repository as it violates some patents.
 %package -n %{bname}-celt
 Summary:	GStreamer plug-in for CELT support
 Group:		Video
-Requires:	%{bname}-plugins >= %{version}
+Requires:	%{bname}-plugins-base >= %{version}
 BuildRequires:	pkgconfig(celt) >= 0.7.0
 
 %description -n %{bname}-celt
