@@ -64,6 +64,7 @@ BuildRequires:	pkgconfig(libass)
 BuildRequires:	pkgconfig(libcdaudio)
 BuildRequires:	pkgconfig(libmimic)
 BuildRequires:	pkgconfig(libmodplug)
+BuildRequires:	pkgconfig(libmpg123)
 BuildRequires:	pkgconfig(libmusicbrainz)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(openssl)
@@ -73,6 +74,7 @@ BuildRequires:	pkgconfig(orc-0.4) >= 0.4.5
 BuildRequires:	pkgconfig(sdl)
 BuildRequires:	pkgconfig(sndfile)
 BuildRequires:	pkgconfig(valgrind)
+BuildRequires:	pkgconfig(wayland-client)
 %if %{build_plf}
 BuildRequires:	pkgconfig(vo-aacenc)
 BuildRequires:	pkgconfig(vo-amrwbenc)
@@ -479,6 +481,7 @@ Plug-in for CELT support under GStreamer.
 %{_libdir}/gstreamer-%{api}/libgstjpegformat.so
 %{_libdir}/gstreamer-%{api}/libgstliveadder.so
 %{_libdir}/gstreamer-%{api}/libgstmpegtsmux.so
+%{_libdir}/gstreamer-%{api}/libgstmpg123.so
 %{_libdir}/gstreamer-%{api}/libgstmimic.so
 %{_libdir}/gstreamer-%{api}/libgstmpegpsdemux.so
 %{_libdir}/gstreamer-%{api}/libgstopus.so
@@ -499,6 +502,7 @@ Plug-in for CELT support under GStreamer.
 %{_libdir}/gstreamer-%{api}/libgstmpegpsmux.so
 %{_libdir}/gstreamer-%{api}/libgstmpegtsdemux.so
 %{_libdir}/gstreamer-%{api}/libgstvideoparsersbad.so
+%{_libdir}/gstreamer-%{api}/libgstwaylandsink.so
 %if %{build_plf}
 %{_libdir}/gstreamer-%{api}/libgstvoaacenc.so
 %{_libdir}/gstreamer-%{api}/libgstvoamrwbenc.so
