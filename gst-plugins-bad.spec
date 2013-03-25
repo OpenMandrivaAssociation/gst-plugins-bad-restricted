@@ -38,7 +38,7 @@
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
 Version:	1.0.5
-Release:	1%{?extrarelsuffix}
+Release:	2%{?extrarelsuffix}
 License:	LGPLv2+ and GPLv2+
 Group: 		Sound
 Url:		http://gstreamer.freedesktop.org/
@@ -132,6 +132,7 @@ This package is in restricted repository as it violates some patents.
 %package -n %{libbasecamerabinsrc}
 Summary:	Libraries for GStreamer streaming-media framework
 Group:		System/Libraries
+Conflicts:	%{libbasevideo} < 1.0.5
 
 %description -n %{libbasecamerabinsrc}
 This package contains the libraries for %{name}%{api}.
@@ -139,6 +140,7 @@ This package contains the libraries for %{name}%{api}.
 %package -n %{libbasevideo}
 Summary:	Libraries for GStreamer streaming-media framework
 Group:		System/Libraries
+Conflicts:	%{libbasecamerabinsrc} < 1.0.5
 
 %description -n %{libbasevideo}
 This package contains the libraries for %{name}%{api}.
