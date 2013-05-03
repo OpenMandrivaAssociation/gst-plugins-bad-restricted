@@ -40,7 +40,7 @@ Name:		gst-plugins-bad
 Version:	1.0.5
 Release:	2%{?extrarelsuffix}
 License:	LGPLv2+ and GPLv2+
-Group: 		Sound
+Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
 Source0:	http://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}.tar.xz
 Patch0:		gst-plugins-bad-0.10.7-wildmidi-timidity.cfg.patch
@@ -247,7 +247,7 @@ Dirac encoding and decoding plug-in based on Schroedinger.
 Summary:	GStreamer VP8 plug-in
 Group:		Video
 BuildRequires:	pkgconfig(vpx)
-Conflicts: %{bname}-vp8 < 1.0.3-2
+Conflicts:	%{bname}-vp8 < 1.0.3-2
 
 %description -n %{bname}-rtpvp8
 VP8 encoding and decoding plug-in.
@@ -379,7 +379,7 @@ Output plugin for GStreamer to convert to GSM lossy audio format.
 %if 0
 ### SWFDEC FLASH PLUGIN ###
 %package -n %{bname}-swfdec
-Summary: 	GStreamer Flash rendering plug-in
+Summary:	GStreamer Flash rendering plug-in
 Group:		System/Libraries
 Requires:	%{bname}-plugins-base = %{version}
 BuildRequires:	libswfdec-devel => 0.3.0
