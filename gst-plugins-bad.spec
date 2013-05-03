@@ -420,7 +420,7 @@ Plug-in for CELT support under GStreamer.
 %configure2_5x \
 	--disable-static \
 	--with-package-name='OpenMandriva %{name} package' \
-	--with-package-origin='http://www.rosalinux.com/' \
+	--with-package-origin='http://www.openmandriva.org/' \
 %if ! %{build_celt}
 	--disable-celt \
 %endif
