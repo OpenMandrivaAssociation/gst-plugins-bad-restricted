@@ -7,7 +7,6 @@
 %define build_dts	0
 %define build_dirac	0
 %define build_gme	1
-%define build_celt	1
 
 ##########################
 # Hardcode PLF build
@@ -29,10 +28,12 @@
 %define api	1.0
 %define major	0
 %define	libbasecamerabinsrc	%mklibname gstbasecamerabinsrc %{api} %{major}
-%define	libbasevideo		%mklibname gstbasevideo %{api} %{major}
 %define	libphotography		%mklibname gstphotography %{api} %{major}
-%define	libsignalprocessor	%mklibname gstsignalprocessor %{api} %{major}
 %define	libcodecparsers		%mklibname gstcodecparsers %{api} %{major}
+%define libmpegts         %mklibname gstmpegts %{api} %{major}
+%define liburidownloader         %mklibname gsturidownloader %{api} %{major}
+%define libinsertbin         %mklibname gstinsertbin %{api} %{major}
+
 %define devname	%mklibname -d 	%{name} %{api}
 
 Summary:	GStreamer Streaming-media framework plug-ins
@@ -107,7 +108,6 @@ This package is in restricted repository as it violates some patents.
 %package -n %{bname}-plugins-bad
 Summary:	Sound
 Group:		System/Libraries
-Requires:	%{bname}-voip >= %{version}-%{release}
 
 %description -n %{bname}-plugins-bad
 GStreamer is a streaming-media framework, based on graphs of filters which
@@ -135,17 +135,8 @@ This package is in restricted repository as it violates some patents.
 %package -n %{libbasecamerabinsrc}
 Summary:	Libraries for GStreamer streaming-media framework
 Group:		System/Libraries
-Conflicts:	%{libbasevideo} < 1.0.5
 
 %description -n %{libbasecamerabinsrc}
-This package contains the libraries for %{name}%{api}.
-
-%package -n %{libbasevideo}
-Summary:	Libraries for GStreamer streaming-media framework
-Group:		System/Libraries
-Conflicts:	%{libbasecamerabinsrc} < 1.0.5
-
-%description -n %{libbasevideo}
 This package contains the libraries for %{name}%{api}.
 
 %package -n %{libphotography}
@@ -155,13 +146,6 @@ Group:		System/Libraries
 %description -n %{libphotography}
 This package contains the libraries for %{name}%{api}.
 
-%package -n %{libsignalprocessor}
-Summary:	Libraries for GStreamer streaming-media framework
-Group:		System/Libraries
-
-%description -n %{libsignalprocessor}
-This package contains the libraries for %{name}%{api}.
-
 %package -n %{libcodecparsers}
 Summary:	Libraries for GStreamer streaming-media framework
 Group:		System/Libraries
@@ -169,14 +153,36 @@ Group:		System/Libraries
 %description -n %{libcodecparsers}
 This package contains the libraries for %{name}%{api}.
 
+%package -n %{libinsertbin}
+Summary:        Libraries for GStreamer streaming-media framework
+Group:          System/Libraries
+
+%description -n %{libinsertbin}
+This package contains the libraries for %{name}%{api}.
+
+%package -n %{libmpegts}
+Summary:        Libraries for GStreamer streaming-media framework
+Group:          System/Libraries
+
+%description -n %{libmpegts}
+This package contains the libraries for %{name}%{api}.
+
+%package -n %{liburidownloader}
+Summary:        Libraries for GStreamer streaming-media framework
+Group:          System/Libraries
+
+%description -n %{liburidownloader}
+This package contains the libraries for %{name}%{api}.
+
 %package -n %{devname}
 Summary:	Libraries and include files for GStreamer streaming-media framework
 Group:		Development/C
 Requires:	%{libbasecamerabinsrc} = %{version}-%{release}
-Requires:	%{libbasevideo} = %{version}-%{release}
 Requires:	%{libphotography} = %{version}-%{release}
-Requires:	%{libsignalprocessor} = %{version}-%{release}
 Requires:	%{libcodecparsers} = %{version}-%{release}
+Requires:       %{libinsertbin} = %{version}-%{release}
+Requires:       %{libmpegts} = %{version}-%{release}
+Requires:       %{liburidownloader} = %{version}-%{release}
 Provides:	%{name}%{api}-devel = %{version}-%{release}
 
 %description -n %{devname}
@@ -243,18 +249,6 @@ Dirac encoding and decoding plug-in based on Schroedinger.
 
 %files -n %{bname}-schroedinger
 %{_libdir}/gstreamer-%{api}/libgstschro.so
-
-%package -n %{bname}-rtpvp8
-Summary:	GStreamer VP8 plug-in
-Group:		Video
-BuildRequires:	pkgconfig(vpx)
-Conflicts:	%{bname}-vp8 < 1.0.3-2
-
-%description -n %{bname}-rtpvp8
-VP8 encoding and decoding plug-in.
-
-%files -n %{bname}-rtpvp8
-%{_libdir}/gstreamer-%{api}/libgstrtpvp8.so
 
 %if %{build_dts}
 %package -n %{bname}-dts
@@ -331,17 +325,6 @@ This is a subtitle plugin for GStreamer based on libass.
 %files -n %{bname}-libass
 %{_libdir}/gstreamer-%{api}/libgstassrender.so
 
-%package -n %{bname}-voip
-Summary:	GStreamer voip plugins
-Group:		Sound
-
-%description -n %{bname}-voip
-This is a collection of VoIP plugins for GStreamer.
-
-%files -n %{bname}-voip
-%{_libdir}/gstreamer-%{api}/libgstrtpmux.so
-%{_libdir}/gstreamer-%{api}/libgstdtmf.so
-
 %if %{build_faad}
 %package -n %{bname}-faad
 Summary:	GStreamer plug-in for AAC audio playback
@@ -402,17 +385,6 @@ Plug-in for decoding AMR-WB under GStreamer.
 This package is in restricted repository as it violates some patents.
 %endif
 
-%if %{build_celt}
-%package -n %{bname}-celt
-Summary:	GStreamer plug-in for CELT support
-Group:		Video
-Requires:	%{bname}-plugins-base >= %{version}
-BuildRequires:	pkgconfig(celt) >= 0.7.0
-
-%description -n %{bname}-celt
-Plug-in for CELT support under GStreamer.
-%endif
-
 %prep
 %setup -q
 %apply_patches
@@ -422,17 +394,11 @@ Plug-in for CELT support under GStreamer.
 	--disable-static \
 	--with-package-name='OpenMandriva %{name} package' \
 	--with-package-origin='http://www.openmandriva.org/' \
-%if ! %{build_celt}
-	--disable-celt \
-%endif
 %if ! %{build_faac}
 	--disable-faac \
 %endif
 %if ! %{build_faad}
 	--disable-faad \
-%endif
-%if ! %{build_dirac}
-	--disable-dirac \
 %endif
 %if ! %{build_xvid}
 	--disable-xvid \
@@ -488,7 +454,6 @@ Plug-in for CELT support under GStreamer.
 %{_libdir}/gstreamer-%{api}/libgstopus.so
 %{_libdir}/gstreamer-%{api}/libgstpcapparse.so
 %{_libdir}/gstreamer-%{api}/libgstpnm.so
-%{_libdir}/gstreamer-%{api}/libgstscaletempoplugin.so
 %{_libdir}/gstreamer-%{api}/libgstrawparse.so
 %{_libdir}/gstreamer-%{api}/libgstremovesilence.so
 %{_libdir}/gstreamer-%{api}/libgstsdpelem.so
@@ -499,7 +464,6 @@ Plug-in for CELT support under GStreamer.
 %{_libdir}/gstreamer-%{api}/libgstspeed.so
 %{_libdir}/gstreamer-%{api}/libgstsubenc.so
 %{_libdir}/gstreamer-%{api}/libgstbz2.so
-%{_libdir}/gstreamer-%{api}/libgstfragmented.so
 %{_libdir}/gstreamer-%{api}/libgstmpegpsmux.so
 %{_libdir}/gstreamer-%{api}/libgstmpegtsdemux.so
 %{_libdir}/gstreamer-%{api}/libgstvideoparsersbad.so
@@ -514,6 +478,23 @@ Plug-in for CELT support under GStreamer.
 %endif
 %{_libdir}/gstreamer-%{api}/libgstmodplug.so
 %{_libdir}/gstreamer-%{api}/libgsty4mdec.so
+%{_libdir}/gstreamer-%{api}/libgstaccurip.so
+%{_libdir}/gstreamer-%{api}/libgstaiff.so
+%{_libdir}/gstreamer-%{api}/libgstaudiofxbad.so
+%{_libdir}/gstreamer-%{api}/libgstdashdemux.so
+%{_libdir}/gstreamer-%{api}/libgstdecklink.so
+%{_libdir}/gstreamer-%{api}/libgstdfbvideosink.so
+%{_libdir}/gstreamer-%{api}/libgstfbdevsink.so
+%{_libdir}/gstreamer-%{api}/libgstfreeverb.so
+%{_libdir}/gstreamer-%{api}/libgstivtc.so
+%{_libdir}/gstreamer-%{api}/libgstmfc.so
+%{_libdir}/gstreamer-%{api}/libgstmidi.so
+%{_libdir}/gstreamer-%{api}/libgstmxf.so
+%{_libdir}/gstreamer-%{api}/libgstopenal.so
+%{_libdir}/gstreamer-%{api}/libgstrfbsrc.so
+%{_libdir}/gstreamer-%{api}/libgstsmoothstreaming.so
+%{_libdir}/gstreamer-%{api}/libgstvideofiltersbad.so
+%{_libdir}/gstreamer-%{api}/libgstyadif.so
 
 %if %{build_faad}
 %files -n %{bname}-faad
@@ -540,40 +521,42 @@ Plug-in for CELT support under GStreamer.
 %{_libdir}/gstreamer-%{api}/libgstamrwbenc.so
 %endif
 
-%if %{build_celt}
-%files -n %{bname}-celt
-%{_libdir}/gstreamer-%{api}/libgstcelt.so
-%endif
-
 %files -n %{libbasecamerabinsrc}
 %{_libdir}/libgstbasecamerabinsrc-%{api}.so.%{major}*
-
-%files -n %{libbasevideo}
-%{_libdir}/libgstbasevideo-%{api}.so.%{major}*
 
 %files -n %{libphotography}
 %{_libdir}/libgstphotography-%{api}.so.%{major}*
 
-%files -n %{libsignalprocessor}
-%{_libdir}/libgstsignalprocessor-%{api}.so.%{major}*
-
 %files -n %{libcodecparsers}
 %{_libdir}/libgstcodecparsers-%{api}.so.%{major}*
+
+%files -n %{libinsertbin}
+%{_libdir}/libgstinsertbin-%{api}.so.%{major}*
+
+%files -n %{libmpegts}
+%{_libdir}/libgstmpegts-%{api}.so.%{major}*
+
+%files -n %{liburidownloader}
+%{_libdir}/libgsturidownloader-%{api}.so.%{major}*
 
 %files -n %{devname}
 %doc docs/plugins/html
 %doc %{_datadir}/gtk-doc/html/
-%{_libdir}/libgstbasevideo-%{api}.so
 %{_libdir}/libgstcodecparsers-%{api}.so
 %{_libdir}/libgstphotography-%{api}.so
-%{_libdir}/libgstsignalprocessor-%{api}.so
+%{_libdir}/libgstinsertbin-%{api}.so
+%{_libdir}/libgstmpegts-%{api}.so
+%{_libdir}/libgsturidownloader-%{api}.so
 %{_includedir}/gstreamer-%{api}/gst/basecamerabinsrc/*
 %{_includedir}/gstreamer-%{api}/gst/codecparsers/
 %{_includedir}/gstreamer-%{api}/gst/interfaces/photography*
-%{_includedir}/gstreamer-%{api}/gst/signalprocessor/gstsignalprocessor.h
-%{_includedir}/gstreamer-%{api}/gst/video/
-%{_libdir}/pkgconfig/gstreamer-basevideo-%{api}.pc
+%{_includedir}/gstreamer-%{api}/gst/insertbin
+%{_includedir}/gstreamer-%{api}/gst/mpegts
+%{_includedir}/gstreamer-%{api}/gst/uridownloader
 %{_libdir}/pkgconfig/gstreamer-plugins-bad-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-codecparsers-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-insertbin-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-uridownloader-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-mpegts-%{api}.pc
 %{_libdir}/libgstbasecamerabinsrc-%{api}.so
 
