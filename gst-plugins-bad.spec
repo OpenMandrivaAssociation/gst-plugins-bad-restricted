@@ -556,7 +556,6 @@ This package is in restricted repository as it violates some patents.
 %{_libdir}/pkgconfig/gstreamer-plugins-bad-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-codecparsers-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-insertbin-%{api}.pc
-%{_libdir}/pkgconfig/gstreamer-uridownloader-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-mpegts-%{api}.pc
 %{_libdir}/libgstbasecamerabinsrc-%{api}.so
 
