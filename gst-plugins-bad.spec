@@ -12,6 +12,9 @@
 # Hardcode PLF build
 %define build_plf	0
 ##########################
+%if "%{disttag}" == "mdk"
+%define	build_plf	1
+%endif
 
 %if %{build_plf}
 %define distsuffix plf
