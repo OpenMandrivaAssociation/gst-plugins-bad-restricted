@@ -32,7 +32,7 @@
 %define	libphotography		%mklibname gstphotography %{api} %{major}
 %define	libcodecparsers		%mklibname gstcodecparsers %{api} %{major}
 %define libegl			%mklibname gstegl %{api} %{major}
-%define libmpegts         	%mklibname gstmpegts %{api} %{major}
+%define libmpegts		%mklibname gstmpegts %{api} %{major}
 %define liburidownloader	%mklibname gsturidownloader %{api} %{major}
 %define libinsertbin		%mklibname gstinsertbin %{api} %{major}
 %define girname			%mklibname gstreamer-plugins-bad-gir %{api}
@@ -200,8 +200,8 @@ Group:		System/Libraries
 This package contains the libraries for %{name}%{api}.
 
 %package -n %{libegl}
-Summary:        Libraries for GStreamer streaming-media framework
-Group:          System/Libraries
+Summary:	Libraries for GStreamer streaming-media framework
+Group:		System/Libraries
 
 %description -n %{libegl}
 GStreamer is a streaming-media framework, based on graphs of filters which
@@ -214,22 +214,22 @@ plugins.
 This package contains the libraries.
 
 %package -n %{libinsertbin}
-Summary:        Libraries for GStreamer streaming-media framework
-Group:          System/Libraries
+Summary:	Libraries for GStreamer streaming-media framework
+Group:		System/Libraries
 
 %description -n %{libinsertbin}
 This package contains the libraries for %{name}%{api}.
 
 %package -n %{libmpegts}
-Summary:        Libraries for GStreamer streaming-media framework
-Group:          System/Libraries
+Summary:	Libraries for GStreamer streaming-media framework
+Group:		System/Libraries
 
 %description -n %{libmpegts}
 This package contains the libraries for %{name}%{api}.
 
 %package -n %{liburidownloader}
-Summary:        Libraries for GStreamer streaming-media framework
-Group:          System/Libraries
+Summary:	Libraries for GStreamer streaming-media framework
+Group:		System/Libraries
 
 %description -n %{liburidownloader}
 This package contains the libraries for %{name}%{api}.
@@ -241,9 +241,9 @@ Requires:	%{libbasecamerabinsrc} = %{version}-%{release}
 Requires:	%{libphotography} = %{version}-%{release}
 Requires:	%{libcodecparsers} = %{version}-%{release}
 Requires:	%{libegl} = %{EVRD}
-Requires:       %{libinsertbin} = %{version}-%{release}
-Requires:       %{libmpegts} = %{version}-%{release}
-Requires:       %{liburidownloader} = %{version}-%{release}
+Requires:	%{libinsertbin} = %{version}-%{release}
+Requires:	%{libmpegts} = %{version}-%{release}
+Requires:	%{liburidownloader} = %{version}-%{release}
 Provides:	%{name}%{api}-devel = %{version}-%{release}
 
 %description -n %{devname}
