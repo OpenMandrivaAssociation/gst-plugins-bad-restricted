@@ -51,7 +51,7 @@ Patch0:		gst-plugins-bad-0.10.7-wildmidi-timidity.cfg.patch
 Patch10:	gst-plugins-bad-0.10.6-real-codecs-path.patch
 Patch11:	gst-plugins-bad-0.10.23-attribute.patch
 
-%ifarch %{ix86}
+%ifarch %{ix86} x86_64
 BuildRequires:	nasm => 0.90
 %endif
 BuildRequires:	bzip2-devel
