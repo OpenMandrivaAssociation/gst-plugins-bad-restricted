@@ -46,6 +46,8 @@ Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
 Source0:	http://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}.tar.xz
 Patch0:		gst-plugins-bad-0.10.7-wildmidi-timidity.cfg.patch
+# Makes it possible to build against opencv 2.4.9
+Patch2:		gst-plugins-bad-1.2.4-mga-opencv-2.4.9.patch
 # gw: fix for bug #36437 (paths to realplayer codecs)
 # prefer codecs from the RealPlayer package in restricted
 Patch10:	gst-plugins-bad-0.10.6-real-codecs-path.patch
@@ -98,6 +100,7 @@ BuildRequires:	pkgconfig(libopenjpeg1)
 BuildRequires:	pkgconfig(neon)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(openal)
+BuildRequires:	pkgconfig(opencv)
 BuildRequires:	pkgconfig(opus)
 BuildRequires:	pkgconfig(orc-0.4) >= 0.4.5
 BuildRequires:	pkgconfig(librsvg-2.0) >= 2.36
@@ -381,6 +384,17 @@ This is a subtitle plugin for GStreamer based on libass.
 
 %files -n %{bname}-libass
 %{_libdir}/gstreamer-%{api}/libgstassrender.so
+
+%package -n %{bname}-opencv
+Summary:	GStreamer OpenCV Plugins
+Group:		Video/Utilities
+
+%description -n %{bname}-opencv
+GStreamer OpenCV Plugins.
+
+%files -n %{bname}-opencv
+%{_libdir}/gstreamer-%{api}/libgstopencv.so
+%{_datadir}/gst-plugins-bad/%{api}/opencv_haarcascades/*.xml
 
 %if %{build_faad}
 %package -n %{bname}-faad
