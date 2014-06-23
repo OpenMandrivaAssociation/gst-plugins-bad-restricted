@@ -56,6 +56,7 @@ BuildRequires:	nasm => 0.90
 %endif
 BuildRequires:	bzip2-devel
 BuildRequires:	gettext-devel
+BuildRequires:	flite-devel
 BuildRequires:	fonts-ttf-dejavu
 BuildRequires:	ladspa-devel
 BuildRequires:	pkgconfig(bluez)
@@ -501,6 +502,7 @@ GObject Introspection interface description for %{name}.
 %{_libdir}/gstreamer-%{api}/libgsteglglessink.so
 %{_libdir}/gstreamer-%{api}/libgstfieldanalysis.so
 %{_libdir}/gstreamer-%{api}/libgstfestival.so
+%{_libdir}/gstreamer-%{api}/libgstflite.so
 %{_libdir}/gstreamer-%{api}/libgstfluidsynthmidi.so
 %{_libdir}/gstreamer-%{api}/libgstfragmented.so
 %{_libdir}/gstreamer-%{api}/libgstfrei0r.so
