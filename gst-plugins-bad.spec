@@ -58,6 +58,8 @@ BuildRequires:	bzip2-devel
 BuildRequires:	gettext-devel
 BuildRequires:	flite-devel
 BuildRequires:	fonts-ttf-dejavu
+BuildRequires:	gobject-introspection-devel
+BuildRequires:	kernel-headers
 BuildRequires:	ladspa-devel
 BuildRequires:	pkgconfig(bluez)
 BuildRequires:	pkgconfig(cairo)
@@ -68,6 +70,7 @@ BuildRequires:	pkgconfig(dvdnav) >= 4.1.2
 BuildRequires:	pkgconfig(dvdread) >= 4.1.2
 BuildRequires:	pkgconfig(egl)
 BuildRequires:	pkgconfig(exempi-2.0)
+BuildRequires:	pkgconfig(fluidsynth)
 BuildRequires:	pkgconfig(gio-2.0) >= 2.25.0
 BuildRequires:	pkgconfig(gtk+-2.0)
 BuildRequires:	pkgconfig(glesv2)
@@ -78,6 +81,7 @@ BuildRequires:	pkgconfig(gnutls) >= 2.11.3
 BuildRequires:	pkgconfig(gstreamer-plugins-base-%{api}) >= %{version}
 BuildRequires:	pkgconfig(gstreamer-%{api}) >= %{version}
 BuildRequires:	pkgconfig(gstreamer-video-%{api}) >= %{version}
+BuildRequires:	pkgconfig(kate)
 BuildRequires:	pkgconfig(libass)
 BuildRequires:	pkgconfig(libcdaudio)
 BuildRequires:	pkgconfig(libchromaprint)
@@ -91,6 +95,7 @@ BuildRequires:	pkgconfig(libmusicbrainz)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(libofa) >= 0.9.3
 BuildRequires:	pkgconfig(libopenjpeg1)
+BuildRequires:	pkgconfig(neon)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(openal)
 BuildRequires:	pkgconfig(opus)
