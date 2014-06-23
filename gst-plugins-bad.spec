@@ -21,6 +21,7 @@
 %define build_faac	1
 %define build_faad	1
 %define build_xvid	0
+%define build_dirac	0
 %define build_dts	1
 %endif
 
@@ -401,7 +402,7 @@ GStreamer OpenCV Plugins.
 Summary:	GStreamer plug-in for AAC audio playback
 Group:		Sound
 Requires:	%{bname}-plugins-base
-BuildRequires:	libfaad2-devel
+BuildRequires:	%{_lib}faad-devel
 
 %description -n %{bname}-faad
 Plug-ins for playing AAC audio
@@ -414,7 +415,7 @@ This package is in restricted repository as it violates some patents.
 Summary:	GStreamer plug-ins for AAC audio encoding
 Group:		Sound
 Requires:	%{bname}-plugins-base
-BuildRequires:	libfaac-devel
+BuildRequires:	faac-devel
 
 %description -n %{bname}-faac
 Plug-ins for encoding AAC audio
@@ -448,7 +449,7 @@ Plug-in for rendering Flash animations using swfdec library
 Summary:	GStreamer plug-in for AMR-WB support
 Group:		Sound
 Requires:	%{bname}-plugins-base
-BuildRequires:	libamrwb-devel
+BuildRequires:	pkgconfig(opencore-amrwb)
 
 %description -n %{bname}-amrwb
 Plug-in for decoding AMR-WB under GStreamer.
