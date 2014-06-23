@@ -388,7 +388,7 @@ This is a subtitle plugin for GStreamer based on libass.
 
 %package -n %{bname}-opencv
 Summary:	GStreamer OpenCV Plugins
-Group:		Video/Utilities
+Group:		Video
 
 %description -n %{bname}-opencv
 GStreamer OpenCV Plugins.
