@@ -125,7 +125,6 @@ BuildRequires:	pkgconfig(zvbi-0.2)
 BuildRequires:	pkgconfig(vo-aacenc)
 BuildRequires:	pkgconfig(vo-amrwbenc)
 %endif
-BuildRequires:	srtp-devel
 BuildRequires:	wildmidi-devel
 
 %description
