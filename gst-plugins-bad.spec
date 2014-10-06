@@ -39,9 +39,9 @@
 %define liburidownloader	%mklibname gsturidownloader %{api} %{major}
 %define libinsertbin		%mklibname gstinsertbin %{api} %{major}
 %define girname			%mklibname gstreamer-plugins-bad-gir %{api}
-%define libbadbase		%mklibname gstbadbase %{api} %{libmajor}
-%define libbadvideo		%mklibname gstbadvideo %{api} %{libmajor}
-%define libgstwayland		%mklibname gstwayland %{api} %{libmajor}
+%define libbadbase		%mklibname gstbadbase %{api} %{major}
+%define libbadvideo		%mklibname gstbadvideo %{api} %{major}
+%define libgstwayland		%mklibname gstwayland %{api} %{major}
 %define devname			%mklibname -d %{name} %{api}
 
 Summary:	GStreamer Streaming-media framework plug-ins
@@ -264,6 +264,9 @@ Requires:	%{libphotography} = %{version}-%{release}
 Requires:	%{libcodecparsers} = %{version}-%{release}
 Requires:	%{libgl} = %{EVRD}
 Requires:	%{libinsertbin} = %{version}-%{release}
+Requires:	%{libbadbase} = %{version}-%{release}
+Requires:	%{libbadvideo} = %{version}-%{release}
+Requires:	%{libgstwayland} = %{version}-%{release}
 Requires:	%{libmpegts} = %{version}-%{release}
 Requires:	%{liburidownloader} = %{version}-%{release}
 Provides:	%{name}%{api}-devel = %{version}-%{release}
@@ -585,7 +588,6 @@ export CXX=g++
 %{_libdir}/gstreamer-%{api}/libgstbz2.so
 %{_libdir}/gstreamer-%{api}/libgstmpegpsmux.so
 %{_libdir}/gstreamer-%{api}/libgstmpegtsdemux.so
-%{_libdir}/gstreamer-%{api}/libgstteletextdec.so
 %{_libdir}/gstreamer-%{api}/libgstuvch264.so
 %{_libdir}/gstreamer-%{api}/libgstvdpau.so
 %{_libdir}/gstreamer-%{api}/libgstvideoparsersbad.so
@@ -607,6 +609,7 @@ export CXX=g++
 %{_libdir}/gstreamer-%{api}/libgstaudiofxbad.so
 %{_libdir}/gstreamer-%{api}/libgstdashdemux.so
 %{_libdir}/gstreamer-%{api}/libgstdecklink.so
+%{_libdir}/gstreamer-%{api}/libgstaudiomixer.so
 %{_libdir}/gstreamer-%{api}/libgstfbdevsink.so
 %{_libdir}/gstreamer-%{api}/libgstfreeverb.so
 %{_libdir}/gstreamer-%{api}/libgstivtc.so
@@ -618,7 +621,15 @@ export CXX=g++
 %{_libdir}/gstreamer-%{api}/libgstspandsp.so
 %{_libdir}/gstreamer-%{api}/libgstvideofiltersbad.so
 %{_libdir}/gstreamer-%{api}/libgstyadif.so
-
+%{_libdir}/gstreamer-%{api}/libgstcompositor.so
+%{_libdir}/gstreamer-%{api}/libgstivfparse.so
+%{_libdir}/gstreamer-%{api}/libgstjp2kdecimator.so
+%{_libdir}/gstreamer-%{api}/libgstopenexr.so
+%{_libdir}/gstreamer-%{api}/libgstopengl.so
+%{_libdir}/gstreamer-%{api}/libgstsndfile.so
+%{_libdir}/gstreamer-%{api}/libgststereo.so
+%{_libdir}/gstreamer-%{api}/libgstvideosignal.so
+%{_libdir}/gstreamer-%{api}/libgstvmnc.so
 %if %{build_faad}
 %files -n %{bname}-faad
 %{_libdir}/gstreamer-%{api}/libgstfaad.so
@@ -683,6 +694,9 @@ export CXX=g++
 %{_libdir}/libgstinsertbin-%{api}.so
 %{_libdir}/libgstmpegts-%{api}.so
 %{_libdir}/libgsturidownloader-%{api}.so
+%{_libdir}/libgstbadbase-%{api}.so
+%{_libdir}/libgstbadvideo-%{api}.so
+%{_libdir}/libgstwayland-%{api}.so
 %{_libdir}/libgstgl-%{api}.so
 %{_includedir}/gstreamer-%{api}/gst/basecamerabinsrc/
 %{_includedir}/gstreamer-%{api}/gst/codecparsers/
