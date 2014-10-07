@@ -102,7 +102,7 @@ BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(libofa) >= 0.9.3
 BuildRequires:	pkgconfig(libopenjpeg1)
 BuildRequires:	pkgconfig(libusb-1.0)
-Buildequires:	pkgconfig(libwebp)
+BuildRequires:	pkgconfig(libwebp)
 BuildRequires:	pkgconfig(neon)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(openal)
