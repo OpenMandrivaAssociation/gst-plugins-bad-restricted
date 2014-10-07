@@ -78,6 +78,7 @@ BuildRequires:	pkgconfig(fluidsynth)
 BuildRequires:	pkgconfig(gio-2.0) >= 2.25.0
 BuildRequires:	pkgconfig(gtk+-3.0)
 BuildRequires:	pkgconfig(gl)
+BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(glesv2)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gmodule-export-2.0)
