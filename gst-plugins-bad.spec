@@ -76,7 +76,8 @@ BuildRequires:	pkgconfig(egl)
 BuildRequires:	pkgconfig(exempi-2.0)
 BuildRequires:	pkgconfig(fluidsynth)
 BuildRequires:	pkgconfig(gio-2.0) >= 2.25.0
-BuildRequires:	pkgconfig(gtk+-2.0)
+BuildRequires:	pkgconfig(gtk+-3.0)
+BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glesv2)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gmodule-export-2.0)
@@ -85,6 +86,7 @@ BuildRequires:	pkgconfig(gnutls) >= 2.11.3
 BuildRequires:	pkgconfig(gstreamer-plugins-base-%{api}) >= %{version}
 BuildRequires:	pkgconfig(gstreamer-%{api}) >= %{version}
 BuildRequires:	pkgconfig(gstreamer-video-%{api}) >= %{version}
+BuildRequires:	pkgconfig(gudev-1.0)
 BuildRequires:	pkgconfig(kate)
 BuildRequires:	pkgconfig(libass)
 BuildRequires:	pkgconfig(libcdaudio)
@@ -99,6 +101,8 @@ BuildRequires:	pkgconfig(libmusicbrainz)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(libofa) >= 0.9.3
 BuildRequires:	pkgconfig(libopenjpeg1)
+BuildRequires:	pkgconfig(libusb-1.0)
+Buildequires:	pkgconfig(libwebp)
 BuildRequires:	pkgconfig(neon)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(openal)
