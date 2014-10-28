@@ -23,7 +23,7 @@
 %define build_amrwb	0
 %define build_faac	1
 %define build_faad	1
-%define build_xvid	1
+%define build_xvid	0
 %define build_dirac	0
 %define build_dts	1
 %endif
