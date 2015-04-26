@@ -634,6 +634,7 @@ export CXX=g++
 %{_libdir}/gstreamer-%{api}/libgststereo.so
 %{_libdir}/gstreamer-%{api}/libgstvideosignal.so
 %{_libdir}/gstreamer-%{api}/libgstvmnc.so
+%{_libdir}/gstreamer-%{api}/libgstflite.so
 %if %{build_faad}
 %files -n %{bname}-faad
 %{_libdir}/gstreamer-%{api}/libgstfaad.so
