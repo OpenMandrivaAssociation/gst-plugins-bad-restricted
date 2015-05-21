@@ -430,7 +430,7 @@ GStreamer OpenCV Plugins.
 Summary:	GStreamer plug-in for AAC audio playback
 Group:		Sound
 Requires:	%{bname}-plugins-base
-BuildRequires:	faad2-devel
+BuildRequires:	libfaad2-devel
 
 %description -n %{bname}-faad
 Plug-ins for playing AAC audio
