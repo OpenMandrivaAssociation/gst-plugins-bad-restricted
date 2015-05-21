@@ -41,7 +41,6 @@
 %define girname			%mklibname gstreamer-plugins-bad-gir %{api}
 %define libbadbase		%mklibname gstbadbase %{api} %{major}
 %define libbadvideo		%mklibname gstbadvideo %{api} %{major}
-%define libgstwayland		%mklibname gstwayland %{api} %{major}
 %define devname			%mklibname -d %{name} %{api}
 
 Summary:	GStreamer Streaming-media framework plug-ins
@@ -216,13 +215,6 @@ Group:          System/Libraries
 %description -n %{libbadvideo}
 This package contains the libraries for %{name}%{api}.
 
-%package -n %{libgstwayland}
-Summary:        Libraries for GStreamer streaming-media framework
-Group:          System/Libraries
-
-%description -n %{libgstwayland}
-This package contains the libraries for %{name}%{api}.
-
 
 %package -n %{libgl}
 Summary:	Libraries for GStreamer streaming-media framework
@@ -269,7 +261,6 @@ Requires:	%{libgl} = %{EVRD}
 Requires:	%{libinsertbin} = %{version}-%{release}
 Requires:	%{libbadbase} = %{version}-%{release}
 Requires:	%{libbadvideo} = %{version}-%{release}
-Requires:	%{libgstwayland} = %{version}-%{release}
 Requires:	%{libmpegts} = %{version}-%{release}
 Requires:	%{liburidownloader} = %{version}-%{release}
 Provides:	%{name}%{api}-devel = %{version}-%{release}
@@ -543,6 +534,7 @@ export CXX=g++
 %{_libdir}/gstreamer-%{api}/libgstaudiovisualizers.so
 %{_libdir}/gstreamer-%{api}/libgstautoconvert.so
 %{_libdir}/gstreamer-%{api}/libgstbayer.so
+%{_libdir}/gstreamer-%{api}/libgstbluez.so
 %{_libdir}/gstreamer-%{api}/libgstcamerabin2.so
 %{_libdir}/gstreamer-%{api}/libgstchromaprint.so
 %{_libdir}/gstreamer-%{api}/libgstcoloreffects.so
@@ -594,7 +586,6 @@ export CXX=g++
 %{_libdir}/gstreamer-%{api}/libgstuvch264.so
 %{_libdir}/gstreamer-%{api}/libgstvdpau.so
 %{_libdir}/gstreamer-%{api}/libgstvideoparsersbad.so
-%{_libdir}/gstreamer-%{api}/libgstwaylandsink.so
 %{_libdir}/gstreamer-%{api}/libgstwebp.so
 %{_libdir}/gstreamer-%{api}/libgstwildmidi.so
 %if %{build_plf}
@@ -685,9 +676,6 @@ export CXX=g++
 %files -n %{libbadvideo}
 %{_libdir}/libgstbadvideo-%{api}.so.%{major}*
 
-%files -n %{libgstwayland}
-%{_libdir}/libgstwayland-%{api}.so.%{major}*
-
 %files -n %{devname}
 %doc docs/plugins/html
 %doc %{_datadir}/gtk-doc/html/
@@ -699,7 +687,6 @@ export CXX=g++
 %{_libdir}/libgsturidownloader-%{api}.so
 %{_libdir}/libgstbadbase-%{api}.so
 %{_libdir}/libgstbadvideo-%{api}.so
-%{_libdir}/libgstwayland-%{api}.so
 %{_libdir}/libgstgl-%{api}.so
 %{_includedir}/gstreamer-%{api}/gst/basecamerabinsrc/
 %{_includedir}/gstreamer-%{api}/gst/codecparsers/
