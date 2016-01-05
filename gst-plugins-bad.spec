@@ -46,16 +46,13 @@
 
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
-Version:	1.4.5
+Version:	1.6.2
 Release:	1%{?extrarelsuffix}
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
 Source0:	http://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}.tar.xz
 Patch0:		gst-plugins-bad-0.10.7-wildmidi-timidity.cfg.patch
-# gw: fix for bug #36437 (paths to realplayer codecs)
-# prefer codecs from the RealPlayer package in restricted
-Patch10:	gst-plugins-bad-0.10.6-real-codecs-path.patch
 
 %ifarch %{ix86} x86_64
 BuildRequires:	nasm => 0.90
@@ -90,7 +87,6 @@ BuildRequires:	pkgconfig(gstreamer-video-%{api}) >= %{version}
 BuildRequires:	pkgconfig(gudev-1.0)
 BuildRequires:	pkgconfig(kate)
 BuildRequires:	pkgconfig(libass)
-BuildRequires:	pkgconfig(libcdaudio)
 BuildRequires:	pkgconfig(libchromaprint)
 BuildRequires:	pkgconfig(libcrypto)
 BuildRequires:	pkgconfig(libdc1394-2) >= 2.0.0
