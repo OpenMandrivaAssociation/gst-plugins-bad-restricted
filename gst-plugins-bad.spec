@@ -1,4 +1,5 @@
 %define build_experimental	0
+%define _disable_ld_no_undefined 1
 %{?_with_experimental: %{expand: %%global build_experimental 1}}
 %define build_amrwb	0
 %define build_faac	0
@@ -47,8 +48,8 @@
 
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
-Version:	1.6.2
-Release:	1%{?extrarelsuffix}
+Version:	1.6.3
+Release:	3%{?extrarelsuffix}
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
