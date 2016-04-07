@@ -49,7 +49,7 @@
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
 Version:	1.6.3
-Release:	3%{?extrarelsuffix}
+Release:	3.1%{?extrarelsuffix}
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
@@ -117,9 +117,6 @@ BuildRequires:	pkgconfig(sndfile)
 BuildRequires:	pkgconfig(soundtouch)
 BuildRequires:	pkgconfig(spandsp) >= 0.0.6
 BuildRequires:	pkgconfig(libusb-1.0)
-%ifnarch %{mipsx}
-BuildRequires:	pkgconfig(valgrind)
-%endif
 BuildRequires:	pkgconfig(vdpau)
 BuildRequires:	pkgconfig(wayland-client)
 BuildRequires:	pkgconfig(x11)
@@ -507,8 +504,9 @@ GObject Introspection interface description for %{name}.
 %apply_patches
 
 %build
-export CC=gcc
-export CXX=g++
+export CC=%{__cc}
+export CXX=%{__cxx}
+export HAVE_CXX="yes"
 %configure \
 	--disable-static \
 	--disable-directfb \
