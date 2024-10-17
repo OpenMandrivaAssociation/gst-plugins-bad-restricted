@@ -54,7 +54,7 @@ Version:	1.8.1
 Release:	1%{?extrarelsuffix}
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
-Url:		http://gstreamer.freedesktop.org/
+Url:		https://gstreamer.freedesktop.org/
 Source0:	http://gstreamer.freedesktop.org/src/gst-plugins-bad/%{name}-%{version}.tar.xz
 Patch0:		gst-plugins-bad-0.10.7-wildmidi-timidity.cfg.patch
 # We don't ship a version of gtk3 that is built against wayland right now...
