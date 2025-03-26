@@ -177,6 +177,8 @@ BuildRequires:	typelib(GstApp)
 #BuildRequires:	pkgconfig(vo-amrwbenc)
 BuildRequires:	pkgconfig(x265)
 BuildRequires:	pkgconfig(fdk-aac)
+BuildRequires:	pkgconfig(faad2)
+BuildRequires:	pkgconfig(libde265)
 %endif
 BuildRequires:	wildmidi-devel
 # For Qt sink
