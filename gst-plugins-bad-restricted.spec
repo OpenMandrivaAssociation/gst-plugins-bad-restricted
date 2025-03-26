@@ -173,8 +173,8 @@ BuildRequires:	pkgconfig(libqrencode)
 BuildRequires:	pkgconfig(wildmidi)
 BuildRequires:	typelib(GstApp)
 %if %{build_plf}
-BuildRequires:	pkgconfig(vo-aacenc)
-BuildRequires:	pkgconfig(vo-amrwbenc)
+#BuildRequires:	pkgconfig(vo-aacenc)
+#BuildRequires:	pkgconfig(vo-amrwbenc)
 BuildRequires:	pkgconfig(x265)
 BuildRequires:	pkgconfig(fdk-aac)
 %endif
