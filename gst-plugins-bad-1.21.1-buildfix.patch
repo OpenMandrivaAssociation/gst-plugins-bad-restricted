@@ -1,0 +1,16 @@
+diff -up gst-plugins-bad-1.21.1/gst-libs/gst/cuda/meson.build.omv~ gst-plugins-bad-1.21.1/gst-libs/gst/cuda/meson.build
+--- gst-plugins-bad-1.21.1/gst-libs/gst/cuda/meson.build.omv~	2022-10-18 00:59:43.993631145 +0200
++++ gst-plugins-bad-1.21.1/gst-libs/gst/cuda/meson.build	2022-10-18 00:59:48.406647913 +0200
+@@ -64,9 +64,9 @@ gen_sources = []
+ library_def = {'lib': gstcuda}
+ if build_gir
+   gir_includes = ['Gst-1.0', 'GstBase-1.0', 'GstVideo-1.0', 'CudaGst-1.0']
+-  if gstglproto_dep.found()
+-    gir_includes += ['GstGL-1.0']
+-  endif
++#  if gstglproto_dep.found()
++#    gir_includes += ['GstGL-1.0']
++#  endif
+   cuda_gir = {
+     'sources' : files('stub/cuda.h', 'stub/cudaGL.h'),
+     'namespace' : 'CudaGst',
