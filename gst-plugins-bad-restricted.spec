@@ -851,6 +851,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstvideoframe_audiolevel.so
 %if %{build_plf}
 %{_libdir}/gstreamer-%{api}/libgstx265.so
+%{_libdir}/gstreamer-%{api}/libgstde265.so
 %endif
 %{_libdir}/gstreamer-%{api}/libgstivfparse.so
 %{_libdir}/gstreamer-%{api}/libgstjp2kdecimator.so
