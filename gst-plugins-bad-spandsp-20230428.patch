@@ -1,0 +1,12 @@
+diff -up gst-plugins-bad-1.22.2/ext/spandsp/gstspanplc.c.omv~ gst-plugins-bad-1.22.2/ext/spandsp/gstspanplc.c
+diff -up gst-plugins-bad-1.22.2/ext/spandsp/gstspanplc.h.omv~ gst-plugins-bad-1.22.2/ext/spandsp/gstspanplc.h
+--- gst-plugins-bad-1.22.2/ext/spandsp/gstspanplc.h.omv~	2023-04-29 01:08:07.104057549 +0200
++++ gst-plugins-bad-1.22.2/ext/spandsp/gstspanplc.h	2023-04-29 01:08:25.844208197 +0200
+@@ -23,6 +23,7 @@
+ #include <gst/gst.h>
+ 
+ #include <spandsp.h>
++#include <spandsp/private/plc.h>
+ 
+ G_BEGIN_DECLS
+ 
