@@ -1,0 +1,12 @@
+diff -up gst-plugins-bad-1.21.2/ext/openaptx/meson.build.omv~ gst-plugins-bad-1.21.2/ext/openaptx/meson.build
+--- gst-plugins-bad-1.21.2/ext/openaptx/meson.build.omv~	2022-11-08 16:23:02.409396019 +0100
++++ gst-plugins-bad-1.21.2/ext/openaptx/meson.build	2022-11-08 16:23:05.762752697 +0100
+@@ -14,7 +14,7 @@ openaptx_dep = dependency('libfreeaptx',
+ if openaptx_dep.found()
+   openaptx_defines += ['-DUSE_FREEAPTX']
+ else
+-  openaptx_dep = dependency('libopenaptx', version : '== 0.2.0', required : get_option('openaptx'))
++  openaptx_dep = dependency('libopenaptx', version : '>= 0.2.0', required : get_option('openaptx'))
+ endif
+ 
+ if openaptx_dep.found()
