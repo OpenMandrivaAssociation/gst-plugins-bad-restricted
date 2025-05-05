@@ -55,7 +55,7 @@
 
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
-Version:	1.26.0
+Version:	1.26.1
 # Make sure that release in restriected is higher than in main
 Release:	100
 License:	LGPLv2+ and GPLv2+
@@ -955,10 +955,10 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 
 %files -n %{libmpegts}
 %{_libdir}/libgstmpegts-%{api}.so.%{major}*
-%ifnarch aarch64
+
 %files -n %{libcuda}
 %{_libdir}/libgstcuda-%{api}.so.%{major}*
-%endif
+
 %files -n %{liburidownloader}
 %{_libdir}/libgsturidownloader-%{api}.so.%{major}*
 
@@ -998,9 +998,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/libgstphotography-%{api}.so
 %{_libdir}/libgstinsertbin-%{api}.so
 %{_libdir}/libgstmpegts-%{api}.so
-%ifnarch aarch64
 %{_libdir}/libgstcuda-%{api}.so
-%endif
 %{_libdir}/libgsturidownloader-%{api}.so
 %{_libdir}/libgstbadaudio-%{api}.so
 %{_libdir}/libgstwebrtc-%{api}.so
@@ -1018,9 +1016,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_includedir}/gstreamer-%{api}/gst/audio/
 %{_includedir}/gstreamer-%{api}/gst/basecamerabinsrc/
 %{_includedir}/gstreamer-%{api}/gst/codecparsers/
-%ifnarch aarch64
 %{_includedir}/gstreamer-%{api}/gst/cuda/
-%endif
 %{_includedir}/gstreamer-%{api}/gst/webrtc/
 %{_includedir}/gstreamer-%{api}/gst/interfaces/photography*
 %{_includedir}/gstreamer-%{api}/gst/insertbin
@@ -1043,9 +1039,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/pkgconfig/gstreamer-webrtc-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-webrtc-nice-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-insertbin-%{api}.pc
-%ifnarch aarch64
 %{_libdir}/pkgconfig/gstreamer-cuda-%{api}.pc
-%endif
 %{_libdir}/pkgconfig/gstreamer-mpegts-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-play-%{api}.pc
 %{_libdir}/pkgconfig/gstreamer-va-%{api}.pc
@@ -1069,12 +1063,10 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_datadir}/gir-1.0/GstInsertBin-%{api}.gir
 %{_libdir}/girepository-1.0/GstMpegts-%{api}.typelib
 %{_datadir}/gir-1.0/GstMpegts-%{api}.gir
-%ifnarch aarch64
 %{_libdir}/girepository-1.0/CudaGst-%{api}.typelib
 %{_libdir}/girepository-1.0/GstCuda-%{api}.typelib
 %{_datadir}/gir-1.0/CudaGst-%{api}.gir
 %{_datadir}/gir-1.0/GstCuda-%{api}.gir
-%endif
 %{_libdir}/girepository-1.0/GstPlay-%{api}.typelib
 %{_datadir}/gir-1.0/GstPlay-%{api}.gir
 %{_libdir}/girepository-1.0/GstPlayer-%{api}.typelib
