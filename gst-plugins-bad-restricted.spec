@@ -737,6 +737,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 	-Dvmaf=disabled \
 	-Dwpe2=disabled \
 	-Dhip=disabled \
+	-Disac=disabled \
 %ifarch aarch64
 	-Dqsv=disabled \
         -Dnvcodec=disabled \
@@ -779,7 +780,6 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_libdir}/gstreamer-%{api}/libgstlegacyrawparse.so
 %{_libdir}/gstreamer-%{api}/libgstteletext.so
 %{_libdir}/gstreamer-%{api}/libgstttmlsubs.so
-%{_libdir}/gstreamer-%{api}/libgstisac.so
 %{_libdir}/gstreamer-%{api}/libgstldac.so
 %{_libdir}/gstreamer-%{api}/libgstopenaptx.so
 %{_libdir}/gstreamer-%{api}/libgstqroverlay.so
