@@ -55,7 +55,7 @@
 
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
-Version:	1.26.10
+Version:	1.28.1
 # Make sure that release in restriected is higher than in main
 Release:	100
 License:	LGPLv2+ and GPLv2+
@@ -86,7 +86,7 @@ BuildRequires:	abseil-cpp-devel
 BuildRequires:	pkgconfig(aom)
 BuildRequires:	pkgconfig(bluez)
 BuildRequires:	pkgconfig(libbs2b) >= 3.1.0
-BuildRequires:	pkgconfig(libxml-2.0) >= 2.9.2
+BuildRequires:	pkgconfig(libxml-2.0) >= 2.15.2
 BuildRequires:	pkgconfig(pango)
 BuildRequires:	pkgconfig(cairo)
 BuildRequires:	pkgconfig(pangocairo)
@@ -169,7 +169,7 @@ BuildRequires:	pkgconfig(libpcap)
 BuildRequires:	pkgconfig(libtiff-4)
 BuildRequires:	pkgconfig(lcms2)
 BuildRequires:	pkgconfig(nice)
-BuildRequires:	pkgconfig(webrtc-audio-processing-1)
+BuildRequires:	pkgconfig(webrtc-audio-processing-2)
 BuildRequires:	pkgconfig(ffnvcodec)
 BuildRequires:	pkgconfig(libopenaptx)
 #BuildRequires:	pkgconfig(libfreeaptx)
@@ -727,11 +727,16 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
  	-Daja=disabled \
   	-Dnvdswrapper=disabled \
    	-Dnvcomp=disabled \
-    	-Dcuda-nvmm=disabled \
-     	-Dandroidmedia=disabled \
-      	-Dlcevcdecoder=disabled \
-       	-Dlcevcencoder=disabled \
+    -Dcuda-nvmm=disabled \
+    -Dandroidmedia=disabled \
+    -Dlcevcdecoder=disabled \
+    -Dlcevcencoder=disabled \
 	-Dsvtjpegxs=disabled \
+	-Dmpeghdec=disabled \
+	-Dtflite=disabled \
+	-Dvmaf=disabled \
+	-Dwpe2=disabled \
+	-Dhip=disabled \
 %ifarch aarch64
 	-Dqsv=disabled \
         -Dnvcodec=disabled \
@@ -746,7 +751,7 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %find_lang %{name}-%{api}
 
 %files -n %{bname}-plugins-bad -f %{name}-%{api}.lang
-%doc AUTHORS COPYING README* NEWS
+%doc COPYING README*
 %{_bindir}/gst-transcoder-%{api}
 %{_libdir}/gstreamer-%{api}/libgstadpcmdec.so
 %{_libdir}/gstreamer-%{api}/libgstadpcmenc.so
@@ -829,7 +834,6 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_datadir}/gstreamer-%{api}/presets/GstVoAmrwbEnc.prs
 %endif
 %{_libdir}/gstreamer-%{api}/libgstmodplug.so
-%{_libdir}/gstreamer-%{api}/libgsty4mdec.so
 %{_libdir}/gstreamer-%{api}/libgstaccurip.so
 %{_libdir}/gstreamer-%{api}/libgstaiff.so
 %{_libdir}/gstreamer-%{api}/libgstaudiofxbad.so
@@ -1087,3 +1091,5 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_datadir}/gir-1.0/GstVulkanWayland-1.0.gir
 %{_libdir}/girepository-1.0/GstVulkanXCB-1.0.typelib
 %{_datadir}/gir-1.0/GstVulkanXCB-1.0.gir
+%{_libdir}/girepository-1.0/GstCodecParsers-1.0.typelib
+%{_datadir}/gir-1.0/GstCodecParsers-1.0.gir
