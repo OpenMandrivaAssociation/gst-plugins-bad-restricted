@@ -57,7 +57,7 @@ Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
 Version:	1.28.6
 # Make sure that release in restriected is higher than in main
-Release:	100
+Release:	101
 License:	LGPLv2+ and GPLv2+
 Group:		Sound
 Url:		https://gstreamer.freedesktop.org/
@@ -67,6 +67,7 @@ Patch1:		gst-plugins-bad-1.21.1-buildfix.patch
 Patch3:		gst-plugins-bad-spandsp-20230428.patch
 # Lets prefer openaptx (original) and not hostile fork freeaptx made by freedesktop.
 Patch4:		gst-plugins-bad-1.21.2-openaptx-0.2.1.patch
+Patch5:		gst-plugins-bad-opencv5.patch
 
 %ifarch %{ix86} %{x86_64}
 BuildRequires:	nasm => 0.90
@@ -137,7 +138,7 @@ BuildRequires:	pkgconfig(libwebp)
 BuildRequires:	pkgconfig(neon)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(openal)
-BuildRequires:	pkgconfig(opencv4)
+BuildRequires:	pkgconfig(opencv5)
 BuildRequires:	pkgconfig(opus)
 BuildRequires:	pkgconfig(orc-0.4) >= 0.4.5
 BuildRequires:	pkgconfig(openh264)

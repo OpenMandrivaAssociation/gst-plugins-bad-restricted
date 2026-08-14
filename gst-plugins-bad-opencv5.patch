@@ -1,0 +1,71 @@
+diff -ruN a/ext/opencv/gstfaceblur.h gst-plugins-bad/ext/opencv/gstfaceblur.h
+--- a/ext/opencv/gstfaceblur.h	2026-08-05 13:59:39.000000000 +0200
++++ b/ext/opencv/gstfaceblur.h	2026-08-14 19:24:44.003535973 +0200
+@@ -52,6 +52,7 @@
+ 
+ #include <opencv2/core.hpp>
+ #include <opencv2/objdetect.hpp>
++#include <opencv2/xobjdetect.hpp>
+ 
+ G_BEGIN_DECLS
+ /* #defines don't like whitespacey bits */
+diff -ruN a/ext/opencv/gstfacedetect.h gst-plugins-bad/ext/opencv/gstfacedetect.h
+--- a/ext/opencv/gstfacedetect.h	2026-08-05 13:59:39.000000000 +0200
++++ b/ext/opencv/gstfacedetect.h	2026-08-14 19:24:44.003470292 +0200
+@@ -52,6 +52,7 @@
+ #include <gst/gst.h>
+ #include <gst/opencv/gstopencvvideofilter.h>
+ #include <opencv2/objdetect.hpp>
++#include <opencv2/xobjdetect.hpp>
+ 
+ G_BEGIN_DECLS
+ /* #defines don't like whitespacey bits */
+diff -ruN a/ext/opencv/gsthanddetect.h gst-plugins-bad/ext/opencv/gsthanddetect.h
+--- a/ext/opencv/gsthanddetect.h	2026-08-05 13:59:39.000000000 +0200
++++ b/ext/opencv/gsthanddetect.h	2026-08-14 19:24:44.003592033 +0200
+@@ -49,6 +49,7 @@
+ /* opencv */
+ #include <opencv2/core.hpp>
+ #include <opencv2/objdetect.hpp>
++#include <opencv2/xobjdetect.hpp>
+ 
+ G_BEGIN_DECLS
+ /* #defines don't like whitespacey bits */
+diff -ruN a/gst-libs/gst/opencv/meson.build gst-plugins-bad/gst-libs/gst/opencv/meson.build
+--- a/gst-libs/gst/opencv/meson.build	2026-08-05 13:59:39.000000000 +0200
++++ b/gst-libs/gst/opencv/meson.build	2026-08-14 19:24:44.003383741 +0200
+@@ -26,11 +26,15 @@
+   'opencv2/opencv.hpp',
+   'opencv2/video.hpp',
+   'opencv2/tracking.hpp',
++  'opencv2/xobjdetect.hpp',
+ ]
+ 
+ 
+ gstopencv_cargs = []
+-opencv_dep = dependency('opencv', version : ['>= 3.0.0', '< 3.5.0'], required : false, include_type: 'system' )
++opencv_dep = dependency('opencv5', version : ['>= 5.0.0'], required : false, include_type: 'system')
++if not opencv_dep.found()
++  opencv_dep = dependency('opencv', version : ['>= 3.0.0', '< 3.5.0'], required : false, include_type: 'system' )
++endif
+ if not opencv_dep.found()
+   opencv_dep = dependency('opencv4', version : ['>= 4.0.0'], required : opencv_opt, include_type: 'system')
+   if not opencv_dep.found()
+@@ -65,7 +69,7 @@
+ # Use prefix from pkg-config to be compatible with cross-compilation
+ fsmod = import('fs')
+ opencv_path_name = ''
+-foreach d : ['opencv', 'OpenCV', 'opencv4']
++foreach d : ['opencv5', 'opencv', 'OpenCV', 'opencv4']
+   if fsmod.is_dir(opencv_prefix / 'share' / d)
+     opencv_path_name = d
+     break
+@@ -86,7 +90,7 @@
+   opencv_sources,
+   c_args : gst_plugins_bad_args + ['-DBUILDING_GST_OPENCV'],
+   cpp_args : gst_plugins_bad_args + gstopencv_cargs + ['-DBUILDING_GST_OPENCV', '-DG_LOG_DOMAIN="GStreamer-OpenCV"'],
+-  override_options : ['cpp_std=c++11'],
++  override_options : ['cpp_std=c++17'],
+   include_directories : [configinc, libsinc],
+   version : libversion,
+   soversion : soversion,
