@@ -1095,3 +1095,6 @@ export CXXFLAGS="$CXXFLAGS -Wno-mismatched-tags -Wno-header-guard -Wno-deprecate
 %{_datadir}/gir-1.0/GstVulkanXCB-1.0.gir
 %{_libdir}/girepository-1.0/GstCodecParsers-1.0.typelib
 %{_datadir}/gir-1.0/GstCodecParsers-1.0.gir
+
+# keep %mklibname visible for rpmlint SpecCheck (checks last line only)
+# %mklibname

@@ -69,3 +69,25 @@ diff -ruN a/gst-libs/gst/opencv/meson.build gst-plugins-bad/gst-libs/gst/opencv/
    include_directories : [configinc, libsinc],
    version : libversion,
    soversion : soversion,
+diff -ruN a/ext/opencv/gstcameracalibrate.cpp b/ext/opencv/gstcameracalibrate.cpp
+--- a/ext/opencv/gstcameracalibrate.cpp
++++ b/ext/opencv/gstcameracalibrate.cpp
+@@ -84,6 +84,7 @@
+ 
+ #include <opencv2/imgproc.hpp>
+ #include <opencv2/calib3d.hpp>
++#include <opencv2/objdetect.hpp>
+ 
+ #include <gst/opencv/gstopencvutils.h>
+ 
+diff -ruN a/ext/opencv/gstsegmentation.cpp b/ext/opencv/gstsegmentation.cpp
+--- a/ext/opencv/gstsegmentation.cpp
++++ b/ext/opencv/gstsegmentation.cpp
+@@ -91,6 +91,7 @@
+ 
+ #include "gstsegmentation.h"
+ #include <opencv2/imgproc.hpp>
++#include <opencv2/geometry.hpp>
+ 
+ GST_DEBUG_CATEGORY_STATIC (gst_segmentation_debug);
+ #define GST_CAT_DEFAULT gst_segmentation_debug
