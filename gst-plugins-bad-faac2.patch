@@ -1,0 +1,324 @@
+--- a/ext/faac/meson.build	2026-10-08 17:20:32.000000000 +0200
++++ b/ext/faac/meson.build	2026-10-10 03:42:45.302050009 +0200
+@@ -16,7 +16,7 @@
+ }
+ 
+ faac_dep = cc.find_library('faac', required : get_option('faac'))
+-have_faac_h = cc.has_header_symbol('faac.h', 'faacEncOpen')
++have_faac_h = cc.has_header_symbol('faac.h', 'faac_encoder_open')
+ if not have_faac_h and get_option('faac').enabled()
+   error('faac plugin enabled: found libfaac, but not faac.h')
+ endif
+--- a/ext/faac/gstfaac.h	2026-10-08 17:20:32.000000000 +0200
++++ b/ext/faac/gstfaac.h	2026-10-10 03:42:45.302015278 +0200
+@@ -64,7 +64,7 @@
+            midside;
+ 
+   /* FAAC object */
+-  faacEncHandle handle;
++  faac_encoder *handle;
+ };
+ 
+ struct _GstFaacClass {
+--- a/ext/faac/gstfaac.c	2026-10-08 17:20:32.000000000 +0200
++++ b/ext/faac/gstfaac.c	2026-10-10 03:43:25.184515446 +0200
+@@ -43,6 +43,13 @@
+ 
+ #include "gstfaac.h"
+ 
++/* faac 2 retired FAAC_PROFILE_MAIN, FAAC_PROFILE_SSR and FAAC_PROFILE_LTP. Keep the historical numbers so
++ * negotiation can still see them and reject anything but AAC-LC. */
++#define FAAC_PROFILE_MAIN 1
++#define FAAC_PROFILE_LOW  2
++#define FAAC_PROFILE_SSR  3
++#define FAAC_PROFILE_LTP  4
++
+ #define SAMPLE_RATES " 8000, " \
+                     "11025, " \
+                     "12000, " \
+@@ -131,7 +138,7 @@
+ #define FAAC_DEFAULT_RATE_CONTROL VBR
+ #define FAAC_DEFAULT_TNS          FALSE
+ #define FAAC_DEFAULT_MIDSIDE      TRUE
+-#define FAAC_DEFAULT_SHORTCTL     SHORTCTL_NORMAL
++#define FAAC_DEFAULT_SHORTCTL     FAAC_SHORTCTL_NORMAL
+ 
+ #define gst_faac_parent_class parent_class
+ G_DEFINE_TYPE (GstFaac, gst_faac, GST_TYPE_AUDIO_ENCODER);
+@@ -165,9 +172,9 @@
+ 
+   if (!gst_faac_shortctl_type) {
+     static const GEnumValue gst_faac_shortctl[] = {
+-      {SHORTCTL_NORMAL, "SHORTCTL_NORMAL", "Normal block type"},
+-      {SHORTCTL_NOSHORT, "SHORTCTL_NOSHORT", "No short blocks"},
+-      {SHORTCTL_NOLONG, "SHORTCTL_NOLONG", "No long blocks"},
++      {FAAC_SHORTCTL_NORMAL, "SHORTCTL_NORMAL", "Normal block type"},
++      {FAAC_SHORTCTL_NOSHORT, "SHORTCTL_NOSHORT", "No short blocks"},
++      {FAAC_SHORTCTL_NOLONG, "SHORTCTL_NOLONG", "No long blocks"},
+       {0, NULL, NULL},
+     };
+ 
+@@ -253,8 +260,7 @@
+ gst_faac_close_encoder (GstFaac * faac)
+ {
+   if (faac->handle)
+-    faacEncClose (faac->handle);
+-  faac->handle = NULL;
++    faac_encoder_close (&faac->handle);
+ }
+ 
+ static gboolean
+@@ -412,7 +418,7 @@
+   GstCaps *caps;
+ 
+   /* default setup */
+-  faac->profile = LOW;
++  faac->profile = FAAC_PROFILE_LOW;
+   faac->mpegversion = 4;
+   faac->outputformat = 0;
+ 
+@@ -440,15 +446,15 @@
+ 
+     if ((str = gst_structure_get_string (s, "profile"))) {
+       if (strcmp (str, "main") == 0) {
+-        faac->profile = MAIN;
++        faac->profile = FAAC_PROFILE_MAIN;
+       } else if (strcmp (str, "lc") == 0) {
+-        faac->profile = LOW;
++        faac->profile = FAAC_PROFILE_LOW;
+       } else if (strcmp (str, "ssr") == 0) {
+-        faac->profile = SSR;
++        faac->profile = FAAC_PROFILE_SSR;
+       } else if (strcmp (str, "ltp") == 0) {
+-        faac->profile = LTP;
++        faac->profile = FAAC_PROFILE_LTP;
+       } else {
+-        faac->profile = LOW;
++        faac->profile = FAAC_PROFILE_LOW;
+       }
+     }
+ 
+@@ -466,79 +472,95 @@
+ static gboolean
+ gst_faac_open_encoder (GstFaac * faac, GstAudioInfo * info)
+ {
+-  faacEncHandle *handle;
+-  faacEncConfiguration *conf;
+-  guint maxbitrate;
+-  gulong samples, bytes;
++  faac_params params;
++  faac_encoder *handle = NULL;
++  faac_encoder_info encinfo;
++  faac_status status = FAAC_ERR_INTERNAL;
++  guint maxbitrate, per_channel;
+ 
+   g_return_val_if_fail (info->rate != 0 && info->channels != 0, FALSE);
+ 
+   /* clean up in case of re-configure */
+   gst_faac_close_encoder (faac);
+ 
+-  if (!(handle = faacEncOpen (info->rate, info->channels, &samples, &bytes)))
+-    goto setup_failed;
+-
+-  /* mind channel count */
+-  samples /= info->channels;
+-
+-  /* record */
+-  faac->handle = handle;
+-  faac->samples = samples;
+-  faac->bytes = bytes;
++  if (faac->profile != FAAC_PROFILE_LOW) {
++    GST_ELEMENT_ERROR (faac, LIBRARY, SETTINGS, (NULL),
++        ("faac 2 implements AAC-LC only (profile %d)", faac->profile));
++    return FALSE;
++  }
+ 
+-  GST_DEBUG_OBJECT (faac, "faac needs samples %d, output size %d",
+-      faac->samples, faac->bytes);
++  status = faac_params_init (&params, sizeof (params));
++  if (status != FAAC_OK)
++    goto setup_failed;
+ 
+-  /* we negotiated caps update current configuration */
+-  conf = faacEncGetCurrentConfiguration (faac->handle);
+-  conf->mpegVersion = (faac->mpegversion == 4) ? MPEG4 : MPEG2;
+-  conf->aacObjectType = faac->profile;
+-  conf->allowMidside = faac->midside;
+-  conf->useLfe = 0;
+-  conf->useTns = faac->tns;
++  params.sample_rate = info->rate;
++  params.num_channels = info->channels;
++  params.mpeg_version = (faac->mpegversion == 4) ? FAAC_MPEG4 : FAAC_MPEG2;
++  params.object_type = FAAC_OBJ_LOW;
++  /* Mid/side is a stereo tool. The old allowMidside flag was ignored
++   * by libfaac for other layouts. */
++  params.joint_mode = (faac->midside && info->channels == 2)
++      ? FAAC_JOINT_MS : FAAC_JOINT_NONE;
++  params.use_lfe = false;
++  params.use_tns = faac->tns;
++  params.input_format = (enum faac_input_format) faac->format;
++  params.output_format = faac->outputformat ? FAAC_STREAM_ADTS : FAAC_STREAM_RAW;
++  params.short_control = (enum faac_shortctl_mode) faac->shortctl;
+ 
+   if (faac->brtype == VBR) {
+-    conf->quantqual = faac->quality;
++    params.rate_control = FAAC_RC_VBR;
++    params.quant_quality = faac->quality;
++    params.bit_rate = 0;
+   } else if (faac->brtype == ABR) {
+-    conf->bitRate = faac->bitrate / info->channels;
+-  }
+-
+-  conf->inputFormat = faac->format;
+-  conf->outputFormat = faac->outputformat;
+-  conf->shortctl = faac->shortctl;
+-
+-  /* check, warn and correct if the max bitrate for the given samplerate is
+-   * exceeded. Maximum of 6144 bit for a channel */
+-  maxbitrate =
+-      (unsigned int) (6144.0 * (double) info->rate / (double) 1024.0 + .5);
+-  if (conf->bitRate > maxbitrate) {
+-    GST_ELEMENT_WARNING (faac, RESOURCE, SETTINGS, (NULL),
+-        ("bitrate %lu exceeds maximum allowed bitrate of %u for samplerate %d. "
+-            "Setting bitrate to %u", conf->bitRate, maxbitrate,
+-            info->rate, maxbitrate));
+-    conf->bitRate = maxbitrate;
++    per_channel = faac->bitrate / info->channels;
++    /* Maximum of 6144 bits for a channel per frame. */
++    maxbitrate =
++        (unsigned int) (6144.0 * (double) info->rate / (double) 1024.0 + .5);
++    if (per_channel > maxbitrate) {
++      GST_ELEMENT_WARNING (faac, RESOURCE, SETTINGS, (NULL),
++          ("bitrate %u exceeds maximum allowed bitrate of %u for samplerate %d. "
++              "Setting bitrate to %u", per_channel, maxbitrate,
++              info->rate, maxbitrate));
++      per_channel = maxbitrate;
++    }
++    params.rate_control = FAAC_RC_ABR;
++    params.bit_rate = per_channel;
++    params.quant_quality = 0;
+   }
+ 
+-  /* default 0 to start with, libfaac chooses based on bitrate */
+-  conf->bandWidth = 0;
++  status = faac_encoder_open (&params, &handle);
++  if (status != FAAC_OK)
++    goto setup_failed;
+ 
+-  if (!faacEncSetConfiguration (faac->handle, conf))
++  memset (&encinfo, 0, sizeof (encinfo));
++  encinfo.struct_size = sizeof (encinfo);
++  status = faac_encoder_get_info (handle, &encinfo);
++  if (status != FAAC_OK)
+     goto setup_failed;
+ 
+-  /* let's see what really happened,
+-   * note that this may not really match desired rate */
+-  GST_DEBUG_OBJECT (faac, "average bitrate: %lu kbps",
+-      (conf->bitRate + 500) / 1000 * info->channels);
+-  GST_DEBUG_OBJECT (faac, "quantization quality: %ld", conf->quantqual);
+-  GST_DEBUG_OBJECT (faac, "bandwidth: %d Hz", conf->bandWidth);
++  faac->handle = handle;
++  handle = NULL;
++  /* frame_samples is per channel; the legacy open() count included
++   * every channel and was divided down here. */
++  faac->samples = encinfo.frame_samples;
++  faac->bytes = encinfo.max_output_bytes;
++
++  GST_DEBUG_OBJECT (faac, "faac needs samples %d, output size %d",
++      faac->samples, faac->bytes);
++  GST_DEBUG_OBJECT (faac, "average bitrate: %u kbps",
++      (encinfo.bit_rate + 500) / 1000 * info->channels);
++  GST_DEBUG_OBJECT (faac, "quantization quality: %u", encinfo.quant_quality);
++  GST_DEBUG_OBJECT (faac, "bandwidth: %u Hz", encinfo.bandwidth);
+ 
+   return TRUE;
+ 
+   /* ERRORS */
+ setup_failed:
+   {
+-    GST_ELEMENT_ERROR (faac, LIBRARY, SETTINGS, (NULL), (NULL));
++    if (handle)
++      faac_encoder_close (&handle);
++    GST_ELEMENT_ERROR (faac, LIBRARY, SETTINGS, (NULL),
++        ("%s", faac_strerror (status)));
+     return FALSE;
+   }
+ }
+@@ -565,16 +587,19 @@
+ 
+   /* DecoderSpecificInfo is only available for mpegversion=4 */
+   if (faac->mpegversion == 4) {
+-    guint8 *config = NULL;
+-    gulong config_len = 0;
++    const uint8_t *config = NULL;
++    uint32_t config_len = 0;
+ 
+-    /* get the config string */
++    /* Library-owned until the encoder is closed. Do not free it. */
+     GST_DEBUG_OBJECT (faac, "retrieving decoder info");
+-    faacEncGetDecoderSpecificInfo (faac->handle, &config, &config_len);
++    if (faac_encoder_asc (faac->handle, &config, &config_len) != FAAC_OK
++        || !config || !config_len) {
++      gst_caps_unref (srccaps);
++      goto invalid_codec_data;
++    }
+ 
+     if (!gst_codec_utils_aac_caps_set_level_and_profile (srccaps, config,
+             config_len)) {
+-      free (config);
+       gst_caps_unref (srccaps);
+       goto invalid_codec_data;
+     }
+@@ -592,23 +617,21 @@
+ 
+       gst_buffer_unref (codec_data);
+     }
+-
+-    free (config);
+   } else {
+     const gchar *profile;
+ 
+     /* Add least add the profile to the caps */
+     switch (faac->profile) {
+-      case MAIN:
++      case FAAC_PROFILE_MAIN:
+         profile = "main";
+         break;
+-      case LTP:
++      case FAAC_PROFILE_LTP:
+         profile = "ltp";
+         break;
+-      case SSR:
++      case FAAC_PROFILE_SSR:
+         profile = "ssr";
+         break;
+-      case LOW:
++      case FAAC_PROFILE_LOW:
+       default:
+         profile = "lc";
+         break;
+@@ -669,9 +692,20 @@
+     size = 0;
+   }
+ 
+-  if (G_UNLIKELY ((enc_ret = faacEncEncode (faac->handle, (gint32 *) data,
+-                  size / (info->finfo->width / 8), omap.data, omap.size)) < 0))
+-    goto encode_failed;
++  {
++    uint32_t written = 0;
++    uint32_t in_samples = 0;
++    faac_status status;
++
++    if (size)
++      in_samples = size / (info->finfo->width / 8);
++    /* in_samples == 0 flushes. One call emits at most one frame. */
++    status = faac_encoder_encode (faac->handle, size ? data : NULL, in_samples,
++        omap.data, omap.size, &written);
++    if (G_UNLIKELY (status != FAAC_OK))
++      goto encode_failed;
++    enc_ret = written;
++  }
+   ret_size = enc_ret;
+ 
+   if (in_buf)

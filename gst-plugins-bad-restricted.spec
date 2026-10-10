@@ -68,6 +68,8 @@ Patch3:		gst-plugins-bad-spandsp-20230428.patch
 # Lets prefer openaptx (original) and not hostile fork freeaptx made by freedesktop.
 Patch4:		gst-plugins-bad-1.21.2-openaptx-0.2.1.patch
 Patch5:		gst-plugins-bad-opencv5.patch
+# faac 2.2 removed faacEncOpen.
+Patch6:		gst-plugins-bad-faac2.patch
 
 %ifarch %{ix86} %{x86_64}
 BuildRequires:	nasm => 0.90
