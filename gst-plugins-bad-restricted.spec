@@ -55,7 +55,7 @@
 
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		gst-plugins-bad
-Version:	1.28.8
+Version:	1.28.9
 # Make sure that release in restriected is higher than in main
 Release:	102
 License:	LGPLv2+ and GPLv2+
@@ -68,8 +68,6 @@ Patch3:		gst-plugins-bad-spandsp-20230428.patch
 # Lets prefer openaptx (original) and not hostile fork freeaptx made by freedesktop.
 Patch4:		gst-plugins-bad-1.21.2-openaptx-0.2.1.patch
 Patch5:		gst-plugins-bad-opencv5.patch
-# faac 2.2 removed faacEncOpen.
-Patch6:		gst-plugins-bad-faac2.patch
 
 %ifarch %{ix86} %{x86_64}
 BuildRequires:	nasm => 0.90
